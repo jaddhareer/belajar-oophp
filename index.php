@@ -9,15 +9,9 @@ echo "di project ini, saya akan mempelajari OOP PHP agar bisa memahami konsep pr
 echo "<br>";
 echo "<hr>";
 
-$barang1 = new Stock();
-$barang1->kode_barang = 1;
-$barang1->nama_barang = "buku";
-$barang1->jumlah = 10;
-
-$barang2 = new Stock();
-$barang2->kode_barang = 2;
-$barang2->nama_barang = "pensil";
-$barang2->jumlah = 15;
+$barang1 = new Stock(1, 'buku', 10);
+$barang2 = new Stock(2, 'pensil', 10);
 
 $barang1->tampilkanInfo();
+echo $barang1->getJumlah() . "<br>";
 $barang2->tampilkanInfo();
