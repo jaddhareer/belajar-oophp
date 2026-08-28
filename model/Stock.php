@@ -34,7 +34,7 @@ class Stock {
     }
 
     public function getAll() {
-        $query = 'SELECT * FROM' . $this->table;
+        $query = 'SELECT * FROM ' . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         

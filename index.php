@@ -14,19 +14,16 @@ echo "<br>";
 echo "<hr>";
 
 $barang1 = new Stock($conn);
-$barang1->setNamaBarang("buku");
+$barang1->setNamaBarang("kopiah");
 $barang1->setJumlah(10);
+$barang1->save();
 
-$barang2 = new Stock($conn);
-$barang2->setNamaBarang("pensil");
-$barang2->setJumlah(10);
+$stock = new Stock($conn);
+$semuaBarang = $stock->getAll();
 
-$barang3 = new Stock($conn);
-$barang3->setNamaBarang("tas");
-$barang3->setJumlah(10);
-
-if($barang1->save()) {
-    echo "data berhasil disimpan";
-}else{
-    echo "gagal menyimpan";
+foreach ($semuaBarang as $barang) {
+    echo 'Kode :' . $barang['kode_barang'] . '<br>';
+    echo 'Nama :' . $barang['nama_barang'] . '<br>';
+    echo 'Jumlah :' . $barang['jumlah'] . '<br>';
+    echo '<hr>';
 }
