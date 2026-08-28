@@ -11,15 +11,12 @@ class Stock {
     public function __construct($conn){
         $this->conn = $conn;
     }
-    
     public function setKodeBarang($kode_barang) {
         $this->kode_barang = $kode_barang;
     }
-
     public function setNamaBarang($nama_barang) {
         $this->nama_barang = $nama_barang;
     }
-
     public function setJumlah($jumlah) {
         if($jumlah < 0) {
             echo "stok tidak boleh minus <br>";
@@ -27,7 +24,30 @@ class Stock {
         }
         $this->jumlah = $jumlah;
     }
+    public function tambahJumlah($barangmasuk) {
+        if($this->kode_barang === NULL) {
+            echo'kode barang belum ditentukan, update dibatalkan. <br>';
+            return false;
+        }
 
+        $query = 'UPDATE '. $this->table .' SET jumlah = jumlah + :jumlah WHERE kode_barang  = :kode_barang';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':jumlah', $barangmasuk) ;
+        $stmt->bindParam(':kode_barang', $this->kode_barang) ;
+        $stmt->execute();
+    }
+    public function kurangiJumlah($barangkeluar) {
+        if($this->kode_barang === NULL) {
+            echo'kode barang belum ditentukan, update dibatalkan. <br>';
+            return false;
+        }
+
+        $query = 'UPDATE '. $this->table .' SET jumlah = jumlah - :jumlah WHERE kode_barang  = :kode_barang';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':jumlah', $barangkeluar) ;
+        $stmt->bindParam(':kode_barang', $this->kode_barang) ;
+        $stmt->execute();
+    }
     public function save() {
         $query = 'INSERT INTO ' . $this->table .'(nama_barang, jumlah) VALUES (:nama_barang, :jumlah)';
         $stmt = $this->conn->prepare($query);
@@ -35,7 +55,6 @@ class Stock {
         $stmt->bindParam(':jumlah', $this->jumlah);
         return $stmt->execute();
     }
-
     public function update(){
         if($this->kode_barang === NULL) {
             echo'kode barang belum ditentukan, update dibatalkan. <br>';
@@ -64,7 +83,6 @@ class Stock {
 
         return $stmt->rowCount();
     }
-
     public function getAll() {
         $query = 'SELECT * FROM ' . $this->table;
         $stmt = $this->conn->prepare($query);

@@ -1,8 +1,11 @@
 <?php
-require_once "model/Stock.php";
 require_once "controller/inbound.php";
 require_once "view/stockTable.php";
 require_once "model/Database.php";
+require_once "model/Stock.php";
+require_once "model/Transaksi.php";
+require_once "model/TransaksiIn.php";
+require_once "model/TransaksiOut.php";
 
 $db = new Database();
 $conn = $db->getConnection();
@@ -13,13 +16,21 @@ echo "di project ini, saya akan mempelajari OOP PHP agar bisa memahami konsep pr
 echo "<br>";
 echo "<hr>";
 
-$delete = new Stock($conn);
-$delete->setKodeBarang(4);
-$delete->setNamaBarang('kain kafan');
-$delete->setJumlah(12);
-$delete->update();
+$barang = new Stock($conn);
 
-$semuaBarang = $delete->getAll();
+$in = new TransaksiIn($conn);
+$in->setKodeBarang(5);
+$in->setJumlah(1);
+$in->save();
+$in->proses($barang);
+
+$Out = new TransaksiOut($conn);
+$Out->setKodeBarang(5);
+$Out->setJumlah(1);
+$Out->save();
+$Out->proses($barang);
+
+$semuaBarang = $barang->getAll();
 
 foreach ($semuaBarang as $barang) {
     echo 'Kode :' . $barang['kode_barang'] . '<br>';
