@@ -18,15 +18,15 @@ echo "<hr>";
 
 $barang = new Stock($conn);
 
-$in = new TransaksiIn($conn);
-$in->setKodeBarang(5);
-$in->setJumlah(1);
-$in->save();
-$in->proses($barang);
+// $in = new TransaksiIn($conn);
+// $in->setKodeBarang(5);
+// $in->setJumlah(1);
+// $in->save();
+// $in->proses($barang);
 
 $Out = new TransaksiOut($conn);
 $Out->setKodeBarang(5);
-$Out->setJumlah(1);
+$Out->setJumlah(4);
 $Out->save();
 $Out->proses($barang);
 

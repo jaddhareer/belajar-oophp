@@ -42,11 +42,18 @@ class Stock {
             return false;
         }
 
-        $query = 'UPDATE '. $this->table .' SET jumlah = jumlah - :jumlah WHERE kode_barang  = :kode_barang';
+        $query = 'UPDATE '. $this->table .'
+                    SET jumlah = jumlah - :jumlah 
+                    WHERE kode_barang  = :kode_barang AND jumlah >= :jumlah_keluar';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':jumlah', $barangkeluar) ;
         $stmt->bindParam(':kode_barang', $this->kode_barang) ;
+        $stmt->bindParam(':jumlah_keluar', $barangkeluar) ;
         $stmt->execute();
+
+        if($stmt->rowCount() === 0) {
+            echo 'jumlah barang tidak cukup <br>';
+        }
     }
     public function save() {
         $query = 'INSERT INTO ' . $this->table .'(nama_barang, jumlah) VALUES (:nama_barang, :jumlah)';
