@@ -53,7 +53,7 @@ class Stock {
     }
     public function delete(){
         if($this->kode_barang === NULL) {
-            echo'kode barang belum ditentukan, update dibatalkan. <br>';
+            echo'kode barang belum ditentukan, delete dibatalkan. <br>';
             return false;
         }
 
