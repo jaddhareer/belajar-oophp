@@ -5,7 +5,7 @@ class Stock {
     private $nama_barang;
     private $jumlah;
 
-    public function __construct(int $kode_barang, string $nama_barang, int $jumlah){
+    public function __construct(int $kode_barang = 1, string $nama_barang = "barang", int $jumlah = 0){
         $this->kode_barang = $kode_barang;
         $this->nama_barang = $nama_barang;
         $this->jumlah = $jumlah;
@@ -24,7 +24,8 @@ class Stock {
     }
 
     public function tambahJumlah($barangMasuk) {
-        $this->jumlah += $barangMasuk;
+        $jumlahBaru = $this->jumlah + $barangMasuk;
+        $this->setJumlah($jumlahBaru);
     }
 
     public function tampilkanInfo() {
