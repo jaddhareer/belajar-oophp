@@ -13,13 +13,13 @@ echo "di project ini, saya akan mempelajari OOP PHP agar bisa memahami konsep pr
 echo "<br>";
 echo "<hr>";
 
-$barang1 = new Stock($conn);
-$barang1->setNamaBarang("kopiah");
-$barang1->setJumlah(10);
-$barang1->save();
+$delete = new Stock($conn);
+$delete->setKodeBarang(4);
+$delete->setNamaBarang('kain kafan');
+$delete->setJumlah(12);
+$delete->update();
 
-$stock = new Stock($conn);
-$semuaBarang = $stock->getAll();
+$semuaBarang = $delete->getAll();
 
 foreach ($semuaBarang as $barang) {
     echo 'Kode :' . $barang['kode_barang'] . '<br>';
