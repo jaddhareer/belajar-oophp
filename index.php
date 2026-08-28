@@ -18,17 +18,17 @@ echo "<hr>";
 
 $barang = new Stock($conn);
 
-// $in = new TransaksiIn($conn);
-// $in->setKodeBarang(5);
-// $in->setJumlah(1);
-// $in->save();
-// $in->proses($barang);
+$in = new TransaksiIn($conn);
+$in->setKodeBarang(5);
+$in->setJumlah(1);
+$in->save();
+$in->proses($barang);
 
-$Out = new TransaksiOut($conn);
-$Out->setKodeBarang(5);
-$Out->setJumlah(4);
-$Out->save();
-$Out->proses($barang);
+// $Out = new TransaksiOut($conn);
+// $Out->setKodeBarang(5);
+// $Out->setJumlah(4);
+// $Out->save();
+// $Out->proses($barang);
 
 $semuaBarang = $barang->getAll();
 
@@ -37,4 +37,14 @@ foreach ($semuaBarang as $barang) {
     echo 'Nama :' . $barang['nama_barang'] . '<br>';
     echo 'Jumlah :' . $barang['jumlah'] . '<br>';
     echo '<hr>';
+}
+
+$semuatransaksi = new Transaksi($conn);
+$transaksi = $semuatransaksi->getAll();
+
+foreach ($transaksi as $t) {
+    echo 'Kode Transaksi: '. $t['id_transaksi'] . ' | ';
+    echo 'Barang :'. $t['kode_barang'] . ' | ';
+    echo 'Tipe Transaksi:'. $t['tipe'] . ' | ';
+    echo 'waktu:'. $t['tanggal'] . '<br>';
 }
