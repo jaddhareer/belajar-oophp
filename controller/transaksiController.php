@@ -42,8 +42,15 @@ if ($tipe === "in") {
 
 $transaksi->setKodeBarang($kode_barang);
 $transaksi->setJumlah($jumlah);
-$transaksi->save();
-$transaksi->proses($stock);
+$berhasil = $transaksi->proses($stock);
+var_dump($berhasil);
 
-header("Location: ../index.php"); // PRG pattern: redirect setelah POST
+if ($berhasil) {
+    $transaksi->save();
+    header("Location: ../index.php");
+} else {
+    header("Location: ../view/formTransaksi.php?error=stok_kurang");
+    exit;
+}
+
 exit;

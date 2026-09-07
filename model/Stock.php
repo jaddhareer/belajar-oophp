@@ -49,7 +49,7 @@ class Stock {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':jumlah', $barangmasuk) ;
         $stmt->bindParam(':kode_barang', $this->kode_barang) ;
-        $stmt->execute();
+        return $stmt->execute();
     }
     public function kurangiJumlah($barangkeluar) {
         if($this->kode_barang === NULL) {
@@ -64,11 +64,7 @@ class Stock {
         $stmt->bindParam(':jumlah', $barangkeluar) ;
         $stmt->bindParam(':kode_barang', $this->kode_barang) ;
         $stmt->bindParam(':jumlah_keluar', $barangkeluar) ;
-        $stmt->execute();
-
-        if($stmt->rowCount() === 0) {
-            echo '<script>alert("barang tidak boleh minus");</script>';
-        }
+        return $stmt->execute();
     }
     public function save() {
         $query = 'INSERT INTO ' . $this->table .'(nama_barang, jumlah) VALUES (:nama_barang, :jumlah)';
@@ -108,7 +104,7 @@ class Stock {
         return $stmt->rowCount();
     }
     public function getAll() {
-        $query = 'SELECT * FROM ' . $this->table . ' WHERE jumlah > 0 LIMIT 10';
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE jumlah > 0';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         

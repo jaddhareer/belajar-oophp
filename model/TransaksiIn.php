@@ -9,6 +9,6 @@ class TransaksiIn extends Transaksi {
 
     public function proses($stock) {
         $stock->setKodeBarang($this->kode_barang);
-        $stock->tambahJumlah($this->jumlah);
+        return $stock->tambahJumlah($this->jumlah);
     }
 }
