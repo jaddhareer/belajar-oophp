@@ -37,7 +37,9 @@ class Transaksi {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM " . $this->table;
+        $query = "SELECT transaksi.*, stock.nama_barang FROM " . $this->table . "
+        JOIN stock ON transaksi.kode_barang = stock.kode_barang
+        ORDER BY transaksi.id_transaksi DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

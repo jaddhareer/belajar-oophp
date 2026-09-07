@@ -43,8 +43,9 @@ $semuatransaksi = new Transaksi($conn);
 $transaksi = $semuatransaksi->getAll();
 
 foreach ($transaksi as $t) {
-    echo 'Kode Transaksi: '. $t['id_transaksi'] . ' | ';
-    echo 'Barang :'. $t['kode_barang'] . ' | ';
-    echo 'Tipe Transaksi:'. $t['tipe'] . ' | ';
-    echo 'waktu:'. $t['tanggal'] . '<br>';
+    echo 'Kode Transaksi : '. $t['id_transaksi'] . ' | ';
+    echo 'Barang : '. $t['nama_barang'] . ' | ';
+    echo 'Tipe Transaksi : '. $t['tipe'] . ' | ';
+    echo 'Jumlah : '. $t['jumlah'] . ' | ';
+    echo 'waktu : '. $t['tanggal'] . '<br>';
 }

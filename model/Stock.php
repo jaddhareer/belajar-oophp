@@ -24,6 +24,14 @@ class Stock {
         }
         $this->jumlah = $jumlah;
     }
+    public function findByNama($barang){
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE nama_barang = :nama_barang';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':nama_barang', $barang);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function tambahJumlah($barangmasuk) {
         if($this->kode_barang === NULL) {
             echo'kode barang belum ditentukan, update dibatalkan. <br>';
@@ -97,4 +105,5 @@ class Stock {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }
