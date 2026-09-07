@@ -1,5 +1,4 @@
 <?php
-require_once "controller/inbound.php";
 require_once "view/stockTable.php";
 require_once "model/Database.php";
 require_once "model/Stock.php";
@@ -17,35 +16,65 @@ echo "<br>";
 echo "<hr>";
 
 $barang = new Stock($conn);
-
-$in = new TransaksiIn($conn);
-$in->setKodeBarang(5);
-$in->setJumlah(1);
-$in->save();
-$in->proses($barang);
-
-// $Out = new TransaksiOut($conn);
-// $Out->setKodeBarang(5);
-// $Out->setJumlah(4);
-// $Out->save();
-// $Out->proses($barang);
-
 $semuaBarang = $barang->getAll();
-
-foreach ($semuaBarang as $barang) {
-    echo 'Kode :' . $barang['kode_barang'] . '<br>';
-    echo 'Nama :' . $barang['nama_barang'] . '<br>';
-    echo 'Jumlah :' . $barang['jumlah'] . '<br>';
-    echo '<hr>';
-}
 
 $semuatransaksi = new Transaksi($conn);
 $transaksi = $semuatransaksi->getAll();
 
-foreach ($transaksi as $t) {
-    echo 'Kode Transaksi : '. $t['id_transaksi'] . ' | ';
-    echo 'Barang : '. $t['nama_barang'] . ' | ';
-    echo 'Tipe Transaksi : '. $t['tipe'] . ' | ';
-    echo 'Jumlah : '. $t['jumlah'] . ' | ';
-    echo 'waktu : '. $t['tanggal'] . '<br>';
-}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock dan Transaksi</title>
+</head>
+<body>
+    <button style="position:fixed; right:50%"><a href="view/formTransaksi.php">lakukan transaksi</a></button> <br>
+    <div style="display: flex; justify-content: space-around">
+        <div>
+            <h2>data stock</h2>
+            <table>
+                <thead>
+                    <th style="padding: 0 10px;">no</th>
+                    <th style="padding: 0 10px;">kode</th>
+                    <th style="padding: 0 10px;">nama</th>
+                    <th style="padding: 0 10px;">jumlah</th>
+                </thead>
+                <?php $no=1; foreach($semuaBarang as $s) { ?>
+                <tbody>
+                    <td style="padding: 0 10px;"><?= $no ?></td>
+                    <td style="padding: 0 10px;"><?= $s['kode_barang'] ?></td>
+                    <td style="padding: 0 10px;"><?= $s['nama_barang'] ?></td>
+                    <td style="padding: 0 10px;"><?= $s['jumlah'] ?></td>
+                </tbody>
+                <?php $no++; } ?>
+            </table>
+        </div>
+        <div>
+            <h2>data transaksi</h2>
+            <table>
+                <thead>
+                    <th style="padding: 0 10px;">No</th>
+                    <th style="padding: 0 10px;">Barang</th>
+                    <th style="padding: 0 10px;">Tipe</th>
+                    <th style="padding: 0 10px;">Jumlah</th>
+                    <th style="padding: 0 10px;">Waktu</th>
+                    <th style="padding: 0 10px;">ID</th>
+                </thead>
+                <?php $no=1; foreach($transaksi as $t){ ?>
+                <tbody>
+                    <td style="padding: 0 10px;"><?= $no ?></td>
+                    <td style="padding: 0 10px;"><?= $t['nama_barang'] ?></td>
+                    <td style="padding: 0 10px;"><?= $t['tipe'] ?></td>
+                    <td style="padding: 0 10px;"><?= $t['jumlah'] ?></td>
+                    <td style="padding: 0 10px;"><?= $t['tanggal'] ?></td>
+                    <td style="padding: 0 10px;"><?= $t['id_transaksi'] ?></td>
+                </tbody>
+                <?php $no++; } ?>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

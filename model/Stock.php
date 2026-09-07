@@ -24,13 +24,20 @@ class Stock {
         }
         $this->jumlah = $jumlah;
     }
+    public function dataList(){
+        $query = 'SELECT DISTINCT(nama_barang) FROM ' . $this->table;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function findByNama($barang){
         $query = 'SELECT * FROM ' . $this->table . ' WHERE nama_barang = :nama_barang';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nama_barang', $barang);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     public function tambahJumlah($barangmasuk) {
         if($this->kode_barang === NULL) {
@@ -60,7 +67,7 @@ class Stock {
         $stmt->execute();
 
         if($stmt->rowCount() === 0) {
-            echo 'jumlah barang tidak cukup <br>';
+            echo '<script>alert("barang tidak boleh minus");</script>';
         }
     }
     public function save() {
@@ -68,7 +75,9 @@ class Stock {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nama_barang', $this->nama_barang);
         $stmt->bindParam(':jumlah', $this->jumlah);
-        return $stmt->execute();
+        $stmt->execute();
+        return $this->conn->lastInsertId();
+        
     }
     public function update(){
         if($this->kode_barang === NULL) {
@@ -99,7 +108,7 @@ class Stock {
         return $stmt->rowCount();
     }
     public function getAll() {
-        $query = 'SELECT * FROM ' . $this->table;
+        $query = 'SELECT * FROM ' . $this->table . ' WHERE jumlah > 0 LIMIT 10';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         

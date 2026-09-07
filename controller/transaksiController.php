@@ -23,12 +23,14 @@ if ($barangDitemukan) {
     if ($tipe === "out") {
         // tidak masuk akal: barang belum pernah ada, tapi mau dikeluarkan
         echo "Barang belum terdaftar, tidak bisa transaksi keluar.<br>";
-        exit; // hentikan eksekusi, jangan lanjut
+        exit; 
+    } else {
+        // barang baru, daftarkan dulu ke tabel stock
+        $stock->setNamaBarang($nama_barang);
+        $stock->setJumlah(0); 
+        $kode_barang = $stock->save();
     }
-    // barang baru, daftarkan dulu ke tabel stock
-    $stock->setNamaBarang($nama_barang);
-    $stock->setJumlah(0); // stok awal 0, nanti ditambah lewat TransaksiIn
-    $kode_barang = $stock->save(); // dapat kode_barang baru dari lastInsertId()
+    
 }
 
 // sekarang proses transaksinya, pakai polymorphism dari Modul 5
