@@ -43,14 +43,12 @@ if ($tipe === "in") {
 $transaksi->setKodeBarang($kode_barang);
 $transaksi->setJumlah($jumlah);
 $berhasil = $transaksi->proses($stock);
-var_dump($berhasil);
 
 if ($berhasil) {
     $transaksi->save();
     header("Location: ../index.php");
+    exit;
 } else {
     header("Location: ../view/formTransaksi.php?error=stok_kurang");
     exit;
 }
-
-exit;
