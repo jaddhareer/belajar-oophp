@@ -21,4 +21,5 @@ if($useraktif){
     exit;
 } else {
     header('Location: ../view/login.php');
+    exit;
 }
