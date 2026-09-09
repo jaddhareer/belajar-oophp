@@ -15,8 +15,8 @@ $user = new Users($koneksi);
 $useraktif = $user->login($username, $password);
 
 if($useraktif){
-    $_SESSION['username'] = $useraktif['id_user'];
-    $_SESSION['password'] = $useraktif['password'];
+    $_SESSION['user_id'] = $useraktif['id_users'];
+    $_SESSION['username'] = $useraktif['username'];
     header('Location: ../index.php');
     exit;
 } else {
