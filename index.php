@@ -1,4 +1,12 @@
 <?php
+
+session_start(); // wajib, untuk bisa akses $_SESSION
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: view/login.php");
+    exit;
+}
+
 require_once "view/stockTable.php";
 require_once "model/Database.php";
 require_once "model/Stock.php";
@@ -31,7 +39,8 @@ $transaksi = $semuatransaksi->getAll();
     <title>Stock dan Transaksi</title>
 </head>
 <body>
-    <button style="position:fixed; right:50%"><a href="view/formTransaksi.php">lakukan transaksi</a></button> <br>
+    <button style="position:fixed; right:50%; text-decoration:none"><a href="view/formTransaksi.php" style="color:blue; text-decoration:none" >lakukan transaksi</a></button> <br>
+    <button style="position:fixed; right:5%; color:red; text-decoration:none"><a href="controller/logoutController.php" style="color:red; text-decoration:none">Logout</a></button> <br>
     <div style="display: flex; justify-content: space-around">
         <div>
             <h2>data stock</h2>
